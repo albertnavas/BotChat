@@ -25,5 +25,8 @@
     "express": "^4.13.0",
     "jade": "^1.11.0",
     "socket.io": "^1.3.5"
+  },
+  "devDependencies": {
+    "supervisor": "^0.7.1"
   }
 }
