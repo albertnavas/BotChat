@@ -5,12 +5,19 @@ BotChat is a chat with an AIML bot. Is build in [node.js](http://nodejs.org) usi
 ## Installation
 
 ```bash
-	$ git clone git://github.com/albertnavas/BotChat.git
-	$ cd BotChat
-	$ npm install
-	$ npm start
-	
-	Go to http://localhost:3000/
+$ git clone git://github.com/albertnavas/BotChat.git
+$ cd BotChat
+$ npm install
+$ npm start
+
+Go to http://localhost:3000/
+```
+
+## Logs
+
+Only create the folder
+```bash
+mkdir logs
 ```
 
 ## License
