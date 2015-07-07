@@ -5,7 +5,7 @@ var express = require('express')
 	, server = require('http').createServer(app)
 	, io = require('socket.io')(server)
 	, AIMLInterpreter = require('./node_modules/aimlinterpreter/AIMLInterpreter')
-	, helpers = require("./models/aiml.js")
+	, AIMLFunctions = require("./models/aiml.js")
 	, port = process.env.PORT || 3000
 
 // Server listen
@@ -18,17 +18,17 @@ app.use(express.static('public'));
 app.set('view engine', 'jade');
 
 // Routes
-router = require('./middlewares/router')(app, express)
+router = require('./routes/index')(app, express)
 
 // aiml config vars and files
-var aimlInterpreter = new AIMLInterpreter(helpers.getAimlVars());
-aimlInterpreter.loadAIMLFilesIntoArray(helpers.getAimlFiles());
+var aimlInterpreter = new AIMLInterpreter(AIMLFunctions.getAimlVars());
+aimlInterpreter.loadAIMLFilesIntoArray(AIMLFunctions.getAimlFiles());
 
 // Socket connection
 io.on('connection', function (socket) {
 	// First message to user
 	setTimeout(function(){
-		socket.emit('new message', {username: 'Bot', message: 'Hola!'});
+		socket.emit('new message', {username: 'Bot', message: AIMLFunctions.getRandomGreet()});
 	}, 1000)
 	// when the client emits 'new message', this listens and executes
 	socket.on('new message', function (data) {
@@ -36,7 +36,7 @@ io.on('connection', function (socket) {
 		aimlInterpreter.findAnswerInLoadedAIMLFiles(data, function(answer, wildCardArray, input){
 			// Get random answer if no aiml match
 			if (answer == undefined) {
-				answer = helpers.getRandomAnswer();
+				answer = AIMLFunctions.getRandomAnswer();
 			}
 			// Wait 1s and send answer
 			setTimeout(function(){
