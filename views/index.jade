@@ -9,16 +9,16 @@ head
 	link(rel='stylesheet' href='/css/style.min.css')
 body
 	.container
-		#box-bot
-			#box-profile
-				img(id="image-bot" src="/img/robot.png")
-			#box-interaction
-				#box-messages-container
-					#box-messages
-				#box-message
-					form(id='message-form')
-						input(id='message' type='text' autocomplete='off')
-						input(id='message-submit' type='submit')
+		#box
+			#profile
+				img(id="image" src="/img/robot.png")
+			#interaction
+				#messages-container
+					#messages
+				#input-container
+					form(id='form')
+						input(id='input' type='text' autocomplete='off')
+						input(id='submit' type='submit')
 
 	script(src='//code.jquery.com/jquery-2.1.4.min.js')
 	script(src='//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js')

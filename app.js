@@ -2,28 +2,44 @@
 
 var express = require('express')
  	, app = express()
+ 	, fs = require('fs')
 	, server = require('http').createServer(app)
 	, io = require('socket.io')(server)
-	, AIMLInterpreter = require('./node_modules/aimlinterpreter/AIMLInterpreter')
-	, AIMLFunctions = require("./models/aiml.js")
-	, DateFunctions = require("./models/date.js")
+	, AIMLInterpreter = require('aimlinterpreter')
+	, AIMLFunctions = require(__dirname + "/models/aiml.js")
+	, DateFunctions = require(__dirname + "/models/date.js")
 	, winston = require('winston')
+	, UglifyJS = require("uglify-js")
+	, stylus = require('stylus')
+	, nib = require('nib')
 	, port = process.env.PORT || 3000
 
+// Minify js
+var result = UglifyJS.minify(__dirname + '/public/js/main.js');
+fs.writeFile(__dirname + '/public/js/main.min.js', result.code, function (err) {if (err) return console.log(err);});
+
+// Compile and minify stylus
+function compile(str, path) {
+	return stylus(str).set('filename', path).set('compress', true).use(nib());
+}
+app.use(stylus.middleware({
+    src: __dirname + '/public', dest: __dirname + '/public', compile: compile
+}));
+
 // Log system init
-winston.add(winston.transports.File, { filename: './logs/'+DateFunctions.getDateToday()+'.log', level: 'info' });
+winston.add(winston.transports.File, { filename: __dirname + '/logs/'+DateFunctions.getDateToday()+'.log', level: 'info' });
 
 // Server listen
 server.listen(port, function () {console.log('Server listening at port %d', port);});
 
 // Static files
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 // Jade engine
 app.set('view engine', 'jade');
 
 // Routes
-router = require('./routes/index')(app, express)
+router = require(__dirname + '/routes/index')(app, express)
 
 // aiml config vars and files
 var aimlInterpreter = new AIMLInterpreter(AIMLFunctions.getAimlVars());

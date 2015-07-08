@@ -3,9 +3,9 @@ $(function() {
 
 	var socket = io();
 
-	var $boxMessages = $('#box-messages');
-	var $messageForm = $('#message-form');
-	var $inputMessage = $('#message');
+	var $boxMessages = $('#messages');
+	var $messageForm = $('#form');
+	var $inputMessage = $('#input');
 	var message;
 
 	$messageForm.click(function () {
