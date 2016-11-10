@@ -1,6 +1,6 @@
 # BotChat
 
-BotChat is a chat with an AIML bot. Is build in [node.js](http://nodejs.org) using [express.js](http://expressjs.com/) and [socket.io](http://socket.io/).
+BotChat is a chat with an AIML bot. It's build in [node.js](http://nodejs.org) using [express.js](http://expressjs.com/) and [socket.io](http://socket.io/).
 
 ## Installation
 
