@@ -10,6 +10,7 @@ var express = require('express')
 	, DateFunctions = require(__dirname + "/models/date.js")
 	, winston = require('winston')
 	, UglifyJS = require("uglify-js")
+	, pug = require('pug')
 	, stylus = require('stylus')
 	, nib = require('nib')
 	, port = process.env.PORT || 3000
@@ -35,8 +36,8 @@ server.listen(port, function () {console.log('Server listening at port %d', port
 // Static files
 app.use(express.static(__dirname + '/public'));
 
-// Jade engine
-app.set('view engine', 'jade');
+// Pug engine
+app.set('view engine', 'pug');
 
 // Routes
 router = require(__dirname + '/routes/index')(app, express)
