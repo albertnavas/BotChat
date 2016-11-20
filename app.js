@@ -2,22 +2,16 @@
 
 var express = require('express')
  	, app = express()
- 	, fs = require('fs')
 	, server = require('http').createServer(app)
 	, io = require('socket.io')(server)
 	, AIMLInterpreter = require('aimlinterpreter')
 	, AIMLFunctions = require(__dirname + "/models/aiml.js")
 	, DateFunctions = require(__dirname + "/models/date.js")
 	, winston = require('winston')
-	, UglifyJS = require("uglify-js")
 	, pug = require('pug')
 	, stylus = require('stylus')
 	, nib = require('nib')
 	, port = process.env.PORT || 3000
-
-// Minify js
-var result = UglifyJS.minify(__dirname + '/public/js/main.js');
-fs.writeFile(__dirname + '/public/js/main.min.js', result.code, function (err) {if (err) return console.log(err);});
 
 // Compile and minify stylus
 function compile(str, path) {
@@ -34,6 +28,7 @@ winston.add(winston.transports.File, { filename: __dirname + '/logs/'+DateFuncti
 server.listen(port, function () {console.log('Server listening at port %d', port);});
 
 // Static files
+app.use(express.static(__dirname + '/'));
 app.use(express.static(__dirname + '/public'));
 
 // Pug engine
